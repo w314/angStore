@@ -35,4 +35,22 @@ touch src/assets/mock_products.json
 {"id":11,"name":"Shirt","price":29.99,"url":"https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80","description":"Wear it with style!","category_id":3}
 ]
 ```
+### Create ProductService:
+```bash
+mkdir src/app/services
+ng g s services/ProductService
+```
+To be able to make http calls add edit `src/app/app.modul.ts`:
+```typescript
+// import HttpClientModule for making http requests
+import { HttpClientModule } from '@angular/common/http'
 
+//@NgModule({
+    // ...
+    imports: [
+        HttpClientModule
+    ]
+    // ...
+```
+- import http client for making http requests
+- add HttpClientModule to `@NgModule`'s `imports`
