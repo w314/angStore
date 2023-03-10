@@ -24,6 +24,26 @@ git remote add origin <remote_repository_url>
 mkdir src/app/models
 touch src/app/models/Product.ts
 ```
+`src/app/models/Product.ts`:
+```typescript
+export class Product {
+  id: number
+  name: string
+  categoryId: number
+  description: string
+  price: number
+  url: string
+
+  constructor() {
+    this.id = 0
+    this.name = ''
+    this.categoryId = 0
+    this.description = ''
+    this.price = 0
+    this.url = ''  
+  }
+}
+```
 
 ## Get products from server
 In lieu of server add `mock_products.json` to `src/assets`
@@ -43,7 +63,7 @@ touch src/assets/mock_products.json
 ### Create ProductService:
 ```bash
 mkdir src/app/services
-ng g s services/ProductService
+ng g s services/Product
 ```
 To be able to make http calls add edit `src/app/app.modul.ts`:
 ```typescript
@@ -64,16 +84,18 @@ import { Observable } from 'rxjs';
 // import HttpClient to make http requests
 import { HttpClient } from '@angular/common/http'
 // import Product model
-import { Product } from './../models/Product'
+import { Product } from '../models/Product'
 
 // ...
 
     // inject HttpClient dependency to constructor
     constructor(private htttp: httpClient){}
 
-    // get data from web server, return a data stream of array of Products
+    // get data from web server
+    // return a data stream of array of Products
     getProducts(): Observable<Product[]> {
-        return this.http.get<[]>('./assets/mock_products.json')
+      return this.http.get<[]>('./assets/mock_products.json')
     }
 // ...
 ```
+
