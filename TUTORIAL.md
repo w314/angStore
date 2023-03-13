@@ -99,3 +99,53 @@ import { Product } from '../models/Product'
 // ...
 ```
 
+## Display Product List
+Create ProductList component:
+```bash
+mkdir src/app/components
+ng g c components/ProductList
+```
+
+Edit `src/app/components/product-list.component.ts`:
+```typescript
+// import ProductService
+import { ProductService } from 'src/app/services/product.service';
+// import Product model
+import { Product } from '../../models/Product'
+
+//...
+
+export class ProductListComponent implements OnInit {
+
+  // property to store products
+  products: Product[] = [] 
+
+  // inject ProductService into contructor
+  constructor(private productService: ProductService) { }
+
+  // on mount get products
+  ngOnInit(): void {
+    // to get products call productServices's getProducts() method
+    // subscribe to the data stream returned
+    this.productService.getProducts().subscribe(data => {
+      // set products property to data received
+      this.products = data
+    })
+  }
+}
+```
+
+`src/app/components/product_list.component.html`:
+```html
+<!-- display product names -->
+<ul>
+  <!-- use the *ngFor directive to iterate through products-->
+  <!-- use {{ }} interpolation to render the product name  -->
+  <li *ngFor="let product of products">{{product.name}}</li>
+</ul>
+```
+
+`src/app/app.component.html`:
+```html
+<app-product-list></app-product-list>
+```
