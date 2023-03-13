@@ -2,5 +2,9 @@
 <ul>
   <!-- use the *ngFor directive to iterate through products-->
   <!-- use {{ }} interpolation to render the product name  -->
-  <li *ngFor="let product of products">{{product.name}}</li>
+  <li *ngFor="let product of products">
+    <!-- use [] = "" input property binding to bind  -->
+    <!-- product in parent component to product in child component -->
+    <app-product [product] ="product"></app-product>
+  </li>
 </ul>

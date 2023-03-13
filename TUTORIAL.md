@@ -149,3 +149,52 @@ export class ProductListComponent implements OnInit {
 ```html
 <app-product-list></app-product-list>
 ```
+
+## Dipslay product in child component
+Create child component:
+```bash
+ng g c components/Product
+```
+Edit `src/app/components/product/product.component.ts`:
+```typescript
+// add Input to imports to receive input from parent component
+import { Component, OnInit, Input } from '@angular/core';
+// import Product Model
+import { Product } from '../../models/Product'
+
+//...
+
+export class ProductComponent implements OnInit {
+  
+  // declare product property
+  // use @Input decorator to indicate data is provided by the parent component
+  @Input() product: Product
+
+  constructor() { 
+    // initialize product property
+    this.product = {
+      id: 0,
+      name: '',
+      price: 0,
+      description: '',
+      categoryId: 0,
+      url: ''
+    }
+  }
+//...
+```
+`src/app/components/product/product.component.html`:
+```html
+<!-- use {{ }} interpolation to display product name -->
+<p>{{ product.name }}</p>
+```
+Edit `scr/app/components/product-list/product-list.component.html`:
+```html
+<!-- ... -->
+  <li *ngFor="let product of products">
+    <!-- use [] = "" input property binding to bind  -->
+    <!-- product in parent component to product in child component -->
+    <app-product [product] ="product"></app-product>
+  </li>
+  <!-- ... -->
+```

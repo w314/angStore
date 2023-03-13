@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 
 // import HttpClientModule for making http requests
 import { HttpClientModule } from '@angular/common/http';
-import { ProductListComponent } from './components/product-list/product-list.component'
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductComponent } from './components/product/product.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
