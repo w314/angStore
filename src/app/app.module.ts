@@ -7,13 +7,17 @@ import { AppComponent } from './app.component';
 // import HttpClientModule for making http requests
 import { HttpClientModule } from '@angular/common/http';
 import { ProductListComponent } from './components/product-list/product-list.component';
-import { ProductComponent } from './components/product/product.component'
+import { ProductComponent } from './components/product/product.component';
+import { CartComponent } from './components/cart/cart.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
-    ProductComponent
+    ProductComponent,
+    CartComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,

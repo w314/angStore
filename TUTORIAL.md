@@ -198,3 +198,55 @@ Edit `scr/app/components/product-list/product-list.component.html`:
   </li>
   <!-- ... -->
 ```
+
+## Create Navigation with Product List and Cart
+Create Cart component
+```bash
+ng g c components/cart
+```
+Create NavBar component
+```
+ng g c components/navBar
+```
+Add NavBar component to App component
+Edit `src/app/app.component.html`:
+```html
+<app-nav-bar></app-nav-bar>
+```
+
+### Setup Router
+Setup routes in `src/app/app-routing.module.ts`
+```ts
+//...
+// import components
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { CartComponent } from './components/cart/cart.component';
+
+const routes: Routes = [
+  // path does not need to include starting /
+  { path: 'products', component: ProductListComponent },
+  { path: 'cart', component: CartComponent },
+  // redirect root to products
+  { path: '', redirectTo: 'products', pathMatch: 'full'},
+  // redirect all nonmatching routes to products
+  // wild char route needs 2 stars **
+  { path: '**', component: ProductListComponent }
+];
+//...
+```
+`src/app/components/nav-bar/nav-bar.component/html`
+```html
+<nav>
+  <ul>
+    <!-- use routerLink instead of href -->
+    <li><a routerLink="products">Products</a></li>
+    <li><a routerLink="cart">Cart</a></li>
+  </ul>
+</nav>
+```
+
+Replace content of `src/app/app.component.html` with:
+```html
+<app-nav-bar></app-nav-bar>
+<router-outlet></router-outlet>
+```
