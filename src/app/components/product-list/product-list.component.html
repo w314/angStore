@@ -1,10 +1,17 @@
 <!-- display product names -->
 <ul>
-  <!-- use the *ngFor directive to iterate through products-->
+  <!-- use the *ngFor structural directive to iterate through products-->
   <!-- use {{ }} interpolation to render the product name  -->
   <li *ngFor="let product of products">
-    <!-- use [] = "" input property binding to bind  -->
-    <!-- product in parent component to product in child component -->
-    <app-product [product] ="product"></app-product>
+    <div>
+      <!-- use property binding [] = "" to bind
+        <product in parent component to product in child component -->
+      <app-product [product] ="product"></app-product>
+      <!-- use event binding ()="" to bind 
+        updateQuntity() method of the current class component
+        to be used when updateQuantity emitter of child component
+        emits an event -->
+      <app-add-to-cart (updateQuantity)="updateQuantity($event)"></app-add-to-cart>
+    </div>
   </li>
 </ul>

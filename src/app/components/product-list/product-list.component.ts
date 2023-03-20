@@ -26,4 +26,9 @@ export class ProductListComponent implements OnInit {
       this.products = data
     })
   }
+
+  // create updateQuantity method to handle quantity updated
+  updateQuantity(quantity:number) {
+    console.log(`Quantity in product-list component: ${quantity}`)
+  }
 }

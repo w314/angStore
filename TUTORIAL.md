@@ -192,9 +192,9 @@ Edit `scr/app/components/product-list/product-list.component.html`:
 ```html
 <!-- ... -->
   <li *ngFor="let product of products">
-    <!-- use [] = "" input property binding to bind  -->
-    <!-- product in parent component to product in child component -->
-    <app-product [product] ="product"></app-product>
+      <!-- use property binding [] = "" to bind
+        <product in parent component to product in child component -->
+      <app-product [product] ="product"></app-product>
   </li>
   <!-- ... -->
 ```
@@ -249,4 +249,86 @@ Replace content of `src/app/app.component.html` with:
 ```html
 <app-nav-bar></app-nav-bar>
 <router-outlet></router-outlet>
+```
+
+## Add Form: addToCart
+- It is going to be a `template driven form` (vs reactive form).
+- We will use `two way binding` where the value of a form input in the view  is bound to a property in the component class. Data can be shared in both direction, we can read and write data.
+- We will use the `@Output()` decorator and the `EventEmitter` to pass the data entered into the form to the parent component
+
+Add `FormsModule` to `src/app/app.module.ts`:
+- import
+- add to imports array
+```ts
+// import for forms
+import { FormsModule } from '@angular/forms';
+//...
+  imports: [
+    FormsModule
+//...
+```
+
+Create addToCart component
+```bash
+ng g c components/addToCart
+```
+Edit `src/app/components/add-to-cart/add-to-cart.component.ts`
+```ts
+//...
+// add Output, EventEmitter to imports
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+//...
+  // create quantity property
+  quantity = 0
+  // create updateQuantity event emitter that will pass data
+  // to the parent component
+  @Output() updateQuantity: EventEmitter<number> = new EventEmitter()
+//...
+  // handle form submission
+  submitForm() {
+    // emit quantity information to parent component
+    // when form is submitted
+    this.updateQuantity.emit(this.quantity)
+    // reset quantity to 0 on form
+    this.quantity = 0
+  }
+}
+```
+
+Create form in `src/app/components/add-to-cart/add-to-cart.component.html`
+```html
+<!-- use event binding ()="" -->
+<!-- to set form submit event to call the onSubmit method of the component class -->
+<form (ngSubmit)="submitForm()">
+  <!-- ngModel's use two way binding [(ngModel)]="propName" -->
+  <!-- to bind the value of the input quantity input field -->
+  <!-- to the  quantity property in the component class -->
+  <input 
+    type="number" 
+    name="quantity"
+    [(ngModel)]="quantity"
+  >
+  <button type="submit">Add To Cart</button>
+</form>
+```
+
+Include addToCart component to ProductList component.
+Edit `src/app/components/product-list/product-list.component.html`:
+```html
+<!-- ... -->
+      <!-- use event binding ()="" to bind 
+        updateQuntity() method of the current class component
+        to be used when updateQuantity emitter of child component
+        emits an event -->
+      <app-add-to-cart (updateQuantity)="updateQuantity($event)"></app-add-to-cart>
+<!-- ...  -->
+```
+Edit `src/app/components/product-list/product-list.component.ts`:
+```ts
+//...
+  // create updateQuantity method to handle quantity updated
+  updateQuantity(quantity:number) {
+    console.log(`Quantity in product-list component: ${quantity}`)
+  }
+//...
 ```

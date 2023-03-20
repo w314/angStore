@@ -1,0 +1,13 @@
+<!-- use event binding ()="" -->
+<!-- to set form submit event to call the onSubmit method of the component class -->
+<form (ngSubmit)="submitForm()">
+  <!-- ngModel's use two way binding [(ngModel)]="propName" -->
+  <!-- to bind the value of the input quantity input field -->
+  <!-- to the  quantity property in the component class -->
+  <input 
+    type="number" 
+    name="quantity"
+    [(ngModel)]="quantity"
+  >
+  <button type="submit">Add To Cart</button>
+</form>

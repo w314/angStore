@@ -18,5 +18,6 @@ export class ProductService {
   // return a data stream of array of Products
   getProducts(): Observable<Product[]> {
     return this.http.get<[]>('./assets/mock_products.json')
+    // return this.http.get<[]>('http://localhost:3001/products')
   }
 }
