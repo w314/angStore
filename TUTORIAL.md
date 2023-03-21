@@ -332,3 +332,109 @@ Edit `src/app/components/product-list/product-list.component.ts`:
   }
 //...
 ```
+
+## Make add to cart work on Products page
+### Create Models
+Create OrderItem model:
+```bash
+touch src/app/models/OrderItem.ts
+```
+`src/app/models/OrderItem.ts`:
+```ts
+export default interface OrderItem {
+  productId: number,
+  quantity: number
+}
+```
+Create Order model:
+```bash
+touch src/app/models/Order.ts
+```
+
+`src/app/models/Order.ts`:
+```ts
+import OrderItem from "./OrderItem"
+
+export default interface Order {
+  items: OrderItem[]
+  status: 'completed' | 'active'
+}
+```
+
+### Create cart service
+Generate service:
+```bash
+ng g s services/cart
+```
+
+`scr/app/services/cart.servie.ts`:
+```ts
+import { Injectable } from '@angular/core';
+// import models
+import Order from '../models/Order';
+import OrderItem from '../models/OrderItem';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class CartService {
+
+  // declare cart property
+  cart: Order = {items: [] as OrderItem[], status: 'active'}
+
+  constructor() {
+  }
+
+  getCart() {
+    return this.cart
+  } 
+
+  updateCart(item: OrderItem) {
+    this.cart.items.push(item)
+  }
+}
+```
+
+### Make addToCart button add product to cart
+Edit `src/app/components/add-to-cart/add-to-cart.component.ts`:
+```ts
+// import models
+import OrderItem from 'src/app/models/OrderItem';
+//...
+  // get productId from parent component
+  @Input() productId: number = 0
+//...
+ // handle form submission
+  submitForm() {
+    // emit quantity and productId information to parent component
+    // when form is submitted
+    this.updateQuantity.emit({productId: this.productId, quantity: this.quantity})
+    // reset quantity to 0 on form
+    this.quantity = 0
+  }
+```
+
+Edit `src/app/components/product-list/product-list.component.html`
+Replace updateQuantity with updateCart:
+```ts
+//...
+  // create updateCart method to handle quantity updated
+  updateCart(item: OrderItem) {
+    console.log(`In product-list component\nproduct id: ${item.productId}\nquantity: ${item.quantity}`)
+    this.cartService.updateCart(item)
+  }
+//...
+```
+
+Edit `src/app/components/product-list/product-list.component.html`:
+```html
+<!-- 
+- use event binding ()="" to bind 
+  the updateQuantity emitter of the child component
+  to the updateCart() method of the current class component
+  to handle the information passed from child to parent
+- use [] = "" property biding send productId information from parent to child 
+  -->
+<app-add-to-cart [productId]="product.id" (updateQuantity)="updateCart($event)"></app-add-to-cart>
+```

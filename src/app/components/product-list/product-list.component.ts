@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 // import ProductService
 import { ProductService } from 'src/app/services/product.service';
+import { CartService } from 'src/app/services/cart.service';
 // import Product model
 import { Product } from '../../models/Product'
+import OrderItem from 'src/app/models/OrderItem';
 
 @Component({
   selector: 'app-product-list',
@@ -15,7 +17,10 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [] 
 
   // inject ProductService into contructor
-  constructor(private productService: ProductService) { }
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService
+  ) { }
 
   // on mount get products
   ngOnInit(): void {
@@ -28,7 +33,10 @@ export class ProductListComponent implements OnInit {
   }
 
   // create updateQuantity method to handle quantity updated
-  updateQuantity(quantity:number) {
-    console.log(`Quantity in product-list component: ${quantity}`)
+  updateCart(item: OrderItem) {
+    console.log(`In product-list component\nproduct id: ${item.productId}\nquantity: ${item.quantity}`)
+    this.cartService.updateCart(item)
   }
+
+  
 }

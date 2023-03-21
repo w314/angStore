@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 // import HttpClientModule for making http requests
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 // import Observables to create data stream compenets can subscribe to
 import { Observable } from 'rxjs';
 // import Product Module

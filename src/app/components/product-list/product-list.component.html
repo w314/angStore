@@ -7,11 +7,14 @@
       <!-- use property binding [] = "" to bind
         <product in parent component to product in child component -->
       <app-product [product] ="product"></app-product>
-      <!-- use event binding ()="" to bind 
-        updateQuntity() method of the current class component
-        to be used when updateQuantity emitter of child component
-        emits an event -->
-      <app-add-to-cart (updateQuantity)="updateQuantity($event)"></app-add-to-cart>
+      <!-- 
+      - use event binding ()="" to bind 
+        the updateQuantity emitter of the child component
+        to the updateCart() method of the current class component
+        to handle the information passed from child to parent
+      - use [] = "" property biding send productId information from parent to child 
+       -->
+      <app-add-to-cart [productId]="product.id" (updateQuantity)="updateCart($event)"></app-add-to-cart>
     </div>
   </li>
 </ul>

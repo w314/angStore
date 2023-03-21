@@ -1,1 +1,14 @@
-<p>cart works!</p>
+<div *ngIf="cart.items.length == 0">
+  Your cart is empty
+</div>
+
+<div *ngIf="cart.items.length > 0">
+  <ul>
+    <li *ngFor="let item of cart.items">
+      {{item.productId}}
+      {{item.quantity}}
+    </li>
+  </ul>
+</div>
+
+
