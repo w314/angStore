@@ -333,7 +333,7 @@ Edit `src/app/components/product-list/product-list.component.ts`:
 //...
 ```
 
-## Make add to cart work on Products page
+## Make add to cart form add items to cart on Product page
 ### Create Models
 Create OrderItem model:
 ```bash

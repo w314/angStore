@@ -32,7 +32,7 @@ export class ProductListComponent implements OnInit {
     })
   }
 
-  // create updateQuantity method to handle quantity updated
+  // create updateCart method to handle quantity updated
   updateCart(item: OrderItem) {
     console.log(`In product-list component\nproduct id: ${item.productId}\nquantity: ${item.quantity}`)
     this.cartService.updateCart(item)
